@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>xatpaulo</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .bg {
+            position: fixed;
+            inset: 0;
+            overflow: hidden;
+        }
+
+        .bg video,
+        .bg img {
+            position: absolute;
+            inset: 0;
+
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+            display: block;
+        }
+
+        .bg img {
+            display: none;
+        }
+
+        .bg.image-mode video {
+            display: none;
+        }
+
+        .bg.image-mode img {
+            display: block;
+        }
+
+        .toggle-bg {
+            position: fixed;
+            right: 0;
+            top: 100px;
+            z-index: 9999;
+
+            width: 48px;
+            height: 48px;
+
+            border: 0;
+            border-radius: 12px 0 0 12px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            cursor: pointer;
+
+            background: rgba(0, 0, 0, 0.55);
+            color: #fff;
+
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .toggle-bg:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .toggle-bg svg {
+            width: 22px;
+            height: 22px;
+            fill: currentColor;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="bg" id="bg">
+        <video id="bgVideo" autoplay muted loop playsinline preload="auto">
+            <source src="https://xatimg.com/video-bg.mp4" type="video/mp4">
+        </video>
+        <img src="https://xatimg.com/image/VP5deVa9203U.png" alt="">
+    </div>
+
+    <button class="toggle-bg" id="toggleBg">
+        <svg id="iconImage" viewBox="0 0 24 24">
+            <path
+                d="M4 5h16v14H4V5zm2 2v10h12V7H6zm2 8 3-4 2.2 3 1.4-1.8L17 15H8zm1-6.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0z" />
+        </svg>
+        <svg id="iconVideo" viewBox="0 0 24 24" style="display:none;">
+            <path
+                d="M4 6h11a2 2 0 0 1 2 2v1.6l3-2V16.4l-3-2V16a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2zm0 2v8h11V8H4z" />
+        </svg>
+    </button>
+
+    <script>
+        const bg = document.getElementById("bg");
+        const btn = document.getElementById("toggleBg");
+        const video = document.getElementById("bgVideo");
+
+        const iconImage = document.getElementById("iconImage");
+        const iconVideo = document.getElementById("iconVideo");
+
+        let isVideo = true;
+
+        btn.addEventListener("click", () => {
+            isVideo = !isVideo;
+            if (isVideo) {
+
+                bg.classList.remove("image-mode");
+
+                video.play().catch(() => { });
+
+                iconImage.style.display = "block";
+                iconVideo.style.display = "none";
+            } else {
+
+                bg.classList.add("image-mode");
+
+                video.pause();
+
+                iconImage.style.display = "none";
+                iconVideo.style.display = "block";
+            }
+        });
+    </script>
+</body>
+</html>
